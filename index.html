@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Happy Birthday</title>
+<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="glow"></div>
+<canvas id="bg"></canvas>
+<svg id="trees" viewBox="0 0 1000 100" preserveAspectRatio="none"><path id="treePath" fill="#05060a"/></svg>
+<canvas id="fw"></canvas>
+
+<section class="room" id="r0">
+  <div class="sub" data-t="{occasion}"></div>
+  <h1 data-t="{first}<br>{middle}<br>{last}"></h1>
+  <button class="btn" data-go="1">Step inside</button>
+</section>
+
+<section class="room" id="r1">
+  <h2 data-t="For {first}"></h2>
+  <div class="msg" id="msg"></div>
+  <button class="btn" data-go="2">Continue</button>
+</section>
+
+<section class="room" id="r2">
+  <h2>Our memories</h2>
+  <div class="mem" id="mem"></div>
+  <div class="hint" id="memHint">Tap a star to watch</div>
+  <button class="btn" data-go="3">Into the poems</button>
+</section>
+
+<section class="room" id="r3">
+  <h2>Poems</h2>
+  <div class="poemTitle" id="poemTitle"></div>
+  <div class="poem" id="poemBody"></div>
+  <div class="poemNav">
+    <button class="btn" id="poemPrev" aria-label="Previous poem">&lsaquo;</button>
+    <span id="poemCount"></span>
+    <button class="btn" id="poemNext" aria-label="Next poem">&rsaquo;</button>
+  </div>
+  <button class="btn" data-go="4">To the stars</button>
+</section>
+
+<section class="room" id="r4">
+  <h2 data-t="{first}’s sky"></h2>
+  <div class="hint">Move or drag across the sky to draw your own constellation</div>
+  <button class="btn" id="wishBtn">Make a wish</button>
+  <div id="wishText"></div>
+  <button class="btn" data-go="5">One last thing</button>
+</section>
+
+<section class="room" id="r5">
+  <h1 data-t="{occasion},<br>{first}"></h1>
+  <div class="hint">Tap the sky to launch fireworks</div>
+  <div class="msg sig" id="closing" style="margin-top:1.2em"></div>
+  <div class="credit" id="credit"></div>
+</section>
+
+<nav id="nav" aria-label="Rooms"></nav>
+
+<script src="config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
