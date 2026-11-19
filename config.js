@@ -21,7 +21,7 @@ const C = {
     { title: "Video five",  url: "" },
     { title: "Video six",   url: "" }
   ],
-  credits: "Made with love by {meFull}. Sky effects inspired by CodePen pens from Sara Zondervan, Yusuke Nakaya, Caleb Miller, bob6664569 and Thibka.",
+  credits: "Made with love by {meFull}.",
   // Poems: one empty string "" makes a gap between stanzas. Add or remove poems freely.
   poems: [
     { title: "Title of your first poem", lines: [
