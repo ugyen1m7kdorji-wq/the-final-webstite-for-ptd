@@ -35,7 +35,7 @@ function go(i){
   [...nav.children].forEach((b,k)=>b.classList.toggle("on",k===i));
   $("msg").classList.remove("go");
   if(i===1){document.querySelectorAll("#msg p").forEach((p,k)=>p.style.transitionDelay=(.6+k*1.6)+"s");setTimeout(()=>$("msg").classList.add("go"),50)}
-  if(i===POEMS)showPoem(0);
+  if(i===POEMS)showPoem(0);else stopMusic();
   if(i!==FINALE) fx.clearRect(0,0,W,H);
   if(i===FINALE){rk.length=0;setTimeout(()=>launch(),500)}
   $("memHint").textContent="Tap a star to watch";
@@ -82,6 +82,28 @@ function burst(r){
 addEventListener("pointerdown",e=>{if(room===FINALE&&!e.target.closest(".btn,nav"))launch(e.clientX)});
 let auto=0;
 
+/* poem music */
+const au=new Audio();au.loop=true;au.volume=0;let musicOn=true,fadeT;
+function fade(to,done){clearInterval(fadeT);fadeT=setInterval(()=>{const d=to-au.volume;
+  if(Math.abs(d)<.05){au.volume=to;clearInterval(fadeT);done&&done()}else au.volume=Math.min(1,Math.max(0,au.volume+Math.sign(d)*.05))},60)}
+function playMusic(src){
+  const btn=$("poemMusic");
+  const start=()=>{
+    if(!src){btn.style.display="none";return}
+    btn.style.display="";
+    if(au.getAttribute("src")!==src){au.src=src}
+    au.volume=0;
+    if(musicOn)au.play().then(()=>fade(.7)).catch(()=>{});
+  };
+  if(!au.paused&&au.volume>0)fade(0,()=>{au.pause();start()});else{au.pause();start()}
+}
+function stopMusic(){fade(0,()=>au.pause())}
+au.addEventListener("error",()=>{$("poemMusic").style.display="none"});
+$("poemMusic").onclick=()=>{
+  musicOn=!musicOn;$("poemMusic").textContent=musicOn?"♪ Music on":"♪ Music off";
+  if(musicOn)au.play().then(()=>fade(.7)).catch(()=>{});else fade(0,()=>au.pause());
+};
+
 /* poems */
 let pi=0;
 function showPoem(i){
@@ -90,6 +112,7 @@ function showPoem(i){
   $("poemTitle").textContent=t(p.title);
   box.classList.remove("go");box.scrollTop=0;box.innerHTML="";
   p.lines.forEach((l,k)=>{const e=document.createElement("p");e.textContent=t(l);e.style.transitionDelay=(.3+k*.8)+"s";box.appendChild(e)});
+  playMusic(p.music);
   $("poemCount").textContent=(pi+1)+" / "+C.poems.length;
   setTimeout(()=>box.classList.add("go"),50);
 }
